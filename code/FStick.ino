@@ -117,7 +117,7 @@ void loop() {
                 static unsigned int count;
                 count++;
                 
-                if(count == 800) {
+                if(count == 200) {
                     if (led_b > 0 && led_g == 0) {
                         led_r++;
                         led_b--;
