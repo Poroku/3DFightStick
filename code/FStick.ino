@@ -64,12 +64,19 @@ void setup() {
 }
 
 #define BUTTON_DEBOUNCE_MS 200
+#define BUFFER_INPUT_NUM 777
  
 void loop() {
     static int ledMode;
     static int buttonState;
     static unsigned long debounceTime;
     static int led_r, led_g, led_b;
+
+    boolean buf_dpadUp[BUFFER_INPUT_NUM] = {0};
+    boolean buf_dpadDown[BUFFER_INPUT_NUM] = {0};
+    boolean buf_dpadLeft[BUFFER_INPUT_NUM] = {0};
+    boolean buf_dpadRight[BUFFER_INPUT_NUM] = {0};
+    static unsigned int buffer_cnt;
 
     if ( buttonState == 0 && (digitalRead(Pin_ledControl) == LOW) ) {
         ledMode++;
@@ -101,9 +108,9 @@ void loop() {
             break;
         case 3:
             /* Note: you can tune this value to make it white */
-            led_r = 190;
+            led_r = 155;
             led_g = 255;
-            led_b = 230;
+            led_b = 255;
             break;
         case 4:
             {
@@ -160,10 +167,10 @@ void loop() {
     boolean buttonL3 = !digitalRead(Pin_ButtonL3);
     boolean buttonR3 = !digitalRead(Pin_ButtonR3);
     
-    boolean dpadUp  = !digitalRead(Pin_DpadUp);
-    boolean dpadDown  = !digitalRead(Pin_DpadDown);
-    boolean dpadLeft  = !digitalRead(Pin_DpadLeft);
-    boolean dpadRight = !digitalRead(Pin_DpadRight);
+    buf_dpadUp[buffer_cnt % BUFFER_INPUT_NUM]    = !digitalRead(Pin_DpadUp);
+    buf_dpadDown[buffer_cnt % BUFFER_INPUT_NUM]  = !digitalRead(Pin_DpadDown);
+    buf_dpadLeft[buffer_cnt % BUFFER_INPUT_NUM]  = !digitalRead(Pin_DpadLeft);
+    buf_dpadRight[buffer_cnt % BUFFER_INPUT_NUM] = !digitalRead(Pin_DpadRight);
     
     // Set XInput buttons
     XInput.setButton(BUTTON_A, buttonA);
@@ -181,6 +188,17 @@ void loop() {
     XInput.setButton(BUTTON_R3, buttonR3);
     
     // Set XInput DPAD values
+    boolean dpadUp = false;
+    boolean dpadDown = false;
+    boolean dpadLeft = false;
+    boolean dpadRight = false;
+    for (unsigned int i = 0; i < BUFFER_INPUT_NUM; i++) {
+        if (buf_dpadUp[i])    dpadUp = true;
+        if (buf_dpadDown[i])  dpadDown = true;
+        if (buf_dpadLeft[i])  dpadLeft = true;
+        if (buf_dpadRight[i]) dpadRight = true;
+    }
+
     XInput.setDpad(dpadUp, dpadDown, dpadLeft, dpadRight);
     
     // Set XInput trigger values
@@ -194,4 +212,5 @@ void loop() {
     
     // Send control data to the computer
     XInput.send();
+    buffer_cnt++;
 }
