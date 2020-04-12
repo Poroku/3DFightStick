@@ -1,3 +1,4 @@
+#3DFightStick
 LeftPlate for arcade joystick layout.
 LeftPlateMix for cherry mx switches layout.
 
@@ -17,3 +18,7 @@ Fasteners used: (+) for mounting joystick
   4x M4x0.7 nut
   2x #8 nut
     +4x #8 nut
+
+A tap drill was used to the pillars of the joystick mount. Change to printed threads in SolidWorks, if preferred.
+The slots on the control center were designed for 12x12mm pushbuttons. Change this as well, if preferred.
+The faces for the control buttons were hot glued onto the buttons. The buttons are also glued to the control center. 
