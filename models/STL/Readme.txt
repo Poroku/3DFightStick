@@ -1,4 +1,3 @@
-#3DFightStick
 LeftPlate for arcade joystick layout.
 LeftPlateMix for cherry mx switches layout.
 
