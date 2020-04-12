@@ -1,8 +1,8 @@
-# 3DFightStick
 LeftPlate for arcade joystick layout.
 LeftPlateMix for cherry mx switches layout.
 
 Generally print everything with supports enabled.
+
   The exceptions are:
     1. Lock Screw model
     2. Tapped hole on the side of L/R bases
